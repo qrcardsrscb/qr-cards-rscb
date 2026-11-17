@@ -1,0 +1,10 @@
+{
+  "001": {
+    "title": "The Solar System",
+    "text": "Our solar system consists of the Sun and eight planets that orbit around it. Earth is the third planet from the Sun and the only known planet that supports life."
+  },
+  "002": {
+    "title": "Arduino Uno",
+    "text": "The Arduino Uno is a microcontroller development board based on the ATmega328P. It is widely used in electronics, automation, and educational projects."
+  }
+}
