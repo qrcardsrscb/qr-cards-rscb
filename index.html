@@ -1,13 +1,67 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Information Cards</title><style>
-:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#182438;background:#f3f6fb}*{box-sizing:border-box}body{margin:0}main{max-width:740px;margin:45px auto;padding:18px}.panel{background:white;border:1px solid #e1e7f0;border-radius:18px;padding:26px;box-shadow:0 8px 30px #17233a0c}h1{margin:0 0 12px;font-size:1.65rem}p{line-height:1.7;white-space:pre-wrap}button,.btn{border:0;border-radius:10px;padding:12px 17px;background:#215cdb;color:white;font-weight:600;cursor:pointer;font-size:1rem}button.secondary{background:#e8eefb;color:#23467f}button:disabled{opacity:.5}input,textarea{width:100%;padding:12px;border:1px solid #c8d3e5;border-radius:9px;font:inherit;margin:6px 0 15px}label{font-weight:600}nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:12px}a{color:#215cdb}small,.muted{color:#64748b}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}#editor{display:none}#qr{display:block;max-width:190px;margin:15px 0}#result{margin-top:18px;overflow-wrap:anywhere}#status{margin-top:12px} @media(max-width:520px){main{margin:12px auto}.panel{padding:20px}}
-</style></head><body><main><nav><strong>Information Cards</strong><a href="?editor=1">Card editor</a></nav><section id="viewer" class="panel"><h1 id="title">Loading…</h1><p id="description"></p><div class="actions"><button id="speak">▶ Dictate</button><button id="stop" class="secondary">■ Stop</button></div><p id="status" class="muted" role="status"></p></section><section id="editor" class="panel"><h1>Create or edit a card</h1><p class="muted">This editor works locally in your browser. Download the updated cards.json file and upload it to your GitHub Pages repository to publish changes.</p><label for="id">Card ID (letters, numbers, - or _)</label><input id="id" placeholder="001" maxlength="60"><label for="editTitle">Card title</label><input id="editTitle" placeholder="The Solar System"><label for="editText">Card description</label><textarea id="editText" rows="8" placeholder="Enter the text to be read aloud..."></textarea><div class="actions"><button id="save">Save card locally</button><button id="download" class="secondary">Download cards.json</button></div><div id="result" aria-live="polite"></div><p class="muted"><small>To edit an existing published card, enter its ID and load it using the button below. New edits are not published until cards.json is uploaded.</small></p><button id="load" class="secondary">Load card by ID</button></section></main><script>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Information Cards</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#182438;background:#f3f6fb}*{box-sizing:border-box}body{margin:0}main{max-width:980px;margin:35px auto;padding:18px}.panel{background:white;border:1px solid #e1e7f0;border-radius:18px;padding:26px;box-shadow:0 8px 30px #17233a0c}h1{margin:0 0 12px;font-size:1.65rem}p{line-height:1.7;white-space:pre-wrap}button{border:0;border-radius:10px;padding:12px 17px;background:#215cdb;color:white;font-weight:600;cursor:pointer;font-size:1rem}button.secondary{background:#e8eefb;color:#23467f}button:disabled{opacity:.5}input,textarea{width:100%;padding:12px;border:1px solid #c8d3e5;border-radius:9px;font:inherit;margin:6px 0 15px}label{font-weight:600}nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:12px}a{color:#215cdb}small,.muted{color:#64748b}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}#editor{display:none}#qr{display:block;max-width:190px;margin:15px 0}#result{margin-top:18px;overflow-wrap:anywhere}#status{margin-top:12px}.card-content{display:grid;grid-template-columns:minmax(0,1fr) minmax(190px,34%);gap:24px;align-items:start}.card-content.no-image{display:block}.card-photo{display:block;width:100%;height:auto;max-height:440px;object-fit:contain;border-radius:12px;background:#f3f6fb;border:1px solid #e1e7f0}.card-photo[hidden]{display:none}.card-text{margin:0;overflow-wrap:anywhere}#imageError{color:#a13232;font-size:.9rem;white-space:normal} @media(max-width:620px){main{margin:12px auto}.panel{padding:20px}.card-content{display:flex;flex-direction:column-reverse;gap:15px}.card-photo{max-height:300px}}
+</style>
+</head>
+<body><main>
+<nav><strong>Information Cards</strong><a href="?editor=1">Card editor</a></nav>
+<section id="viewer" class="panel">
+<h1 id="title">Loading…</h1>
+<div id="cardContent" class="card-content no-image"><p id="description" class="card-text"></p><div id="imageArea" hidden><img id="cardImage" class="card-photo" alt=""><p id="imageError" hidden></p></div></div>
+<div class="actions"><button id="speak">▶ Dictate</button><button id="stop" class="secondary">■ Stop</button></div>
+<p id="status" class="muted" role="status"></p>
+</section>
+<section id="editor" class="panel">
+<h1>Create or edit a card</h1>
+<p class="muted">Edit cards here, download cards.json, then upload it to your GitHub repository to publish changes. Pictures must also be uploaded to the repository.</p>
+<label for="id">Card ID (letters, numbers, - or _)</label><input id="id" placeholder="001" maxlength="60">
+<label for="editTitle">Card title</label><input id="editTitle" placeholder="The Water Saver Plant">
+<label for="editText">Card description</label><textarea id="editText" rows="10" placeholder="Enter the text to be read aloud..."></textarea>
+<label for="editImage">Image path (optional)</label><input id="editImage" placeholder="images/water_saver_plant_001.jpg">
+<p class="muted"><small>Upload the image to your repository's images folder. Enter the exact relative path, including filename and extension.</small></p>
+<div class="actions"><button id="save">Save card locally</button><button id="download" class="secondary">Download cards.json</button><button id="load" class="secondary">Load card by ID</button></div>
+<div id="result" aria-live="polite"></div>
+</section>
+</main>
+<script>
 'use strict';
-const $=id=>document.getElementById(id);let cards={};let speech=null;
-async function init(){try{const r=await fetch('cards.json',{cache:'no-store'});if(r.ok){const data=await r.json();if(data&&typeof data==='object'&&!Array.isArray(data))cards=data;}}catch(e){}const params=new URLSearchParams(location.search);if(params.get('editor')==='1'){ $('viewer').style.display='none';$('editor').style.display='block';return;}const id=params.get('id');const card=id&&Object.prototype.hasOwnProperty.call(cards,id)?cards[id]:null;if(!card){$('title').textContent=id?'Card not found':'Welcome';$('description').textContent=id?'This QR code does not match a published card.':'Scan a card QR code to view its information.';$('speak').disabled=true;$('stop').disabled=true;return;}$('title').textContent=String(card.title||'Untitled');$('description').textContent=String(card.text||'');document.title=String(card.title||'Information Card');}
-$('speak').addEventListener('click',()=>{if(!('speechSynthesis'in window)){ $('status').textContent='Text-to-speech is unavailable in this browser.';return;}speechSynthesis.cancel();speech=new SpeechSynthesisUtterance($('title').textContent+'. '+$('description').textContent);speech.lang=document.documentElement.lang;speech.rate=.95;speech.onstart=()=>{$('status').textContent='Reading aloud…'};speech.onend=()=>{$('status').textContent='Finished.'};speech.onerror=e=>{$('status').textContent=e.error==='canceled'?'Stopped.':'Speech playback failed. Check your device voice settings.'};speechSynthesis.speak(speech);});$('stop').addEventListener('click',()=>{if('speechSynthesis'in window)speechSynthesis.cancel();$('status').textContent='Stopped.';});window.addEventListener('pagehide',()=>{if('speechSynthesis'in window)speechSynthesis.cancel()});
+const $=id=>document.getElementById(id);
+let cards={},speech=null,loadError='';
 function validId(id){return /^[a-zA-Z0-9_-]{1,60}$/.test(id)}
-$('save').addEventListener('click',()=>{const id=$('id').value.trim(),title=$('editTitle').value.trim(),text=$('editText').value.trim();if(!validId(id)||!title||!text){$('result').textContent='Enter a valid ID, title and description.';return;}cards[id]={title,text};const url=new URL(location.href);url.search='?id='+encodeURIComponent(id);$('result').replaceChildren();const p=document.createElement('p');p.textContent='Saved locally. Publish the downloaded cards.json to activate this card.';const a=document.createElement('a');a.href=url.href;a.textContent=url.href;a.target='_blank';a.rel='noopener';$('result').append(p,a);const qr=document.createElement('img');qr.id='qr';qr.alt='QR code for '+id;qr.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent(url.href);$('result').append(qr);});
-$('load').addEventListener('click',()=>{const id=$('id').value.trim();if(!validId(id)){ $('result').textContent='Enter a valid card ID.';return;}const card=cards[id];if(!card){$('result').textContent='No card found with that ID.';return;}$('editTitle').value=card.title||'';$('editText').value=card.text||'';$('result').textContent='Loaded card '+id+'.';});
-$('download').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(cards,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='cards.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000);});init();
+function validImagePath(path){if(!path)return true; if(path.startsWith('/')||path.startsWith('\\')||path.includes('\\')||path.includes('?')||path.includes('#'))return false;const segments=path.split('/');return segments.every(s=>s&&s!=='.'&&s!=='..')&&/\.(png|jpe?g|webp|gif|svg)$/i.test(path)}
+async function init(){
+ try{const r=await fetch('cards.json',{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const data=await r.json();if(!data||typeof data!=='object'||Array.isArray(data))throw Error('cards.json must contain an object');cards=data;}
+ catch(e){loadError='Could not load cards.json: '+e.message;}
+ const params=new URLSearchParams(location.search);
+ if(params.get('editor')==='1'){$('viewer').style.display='none';$('editor').style.display='block';if(loadError)$('result').textContent=loadError+' Do not download a replacement until this is fixed.';return;}
+ const id=params.get('id');const card=id&&Object.prototype.hasOwnProperty.call(cards,id)?cards[id]:null;
+ if(!card||typeof card!=='object'){$('title').textContent=id?'Card not found':'Welcome';$('description').textContent=loadError?loadError:(id?'This QR code does not match a published card.':'Scan a card QR code to view its information.');$('speak').disabled=true;$('stop').disabled=true;return;}
+ $('title').textContent=String(card.title||'Untitled');$('description').textContent=String(card.text||'');document.title=String(card.title||'Information Card');
+ if(typeof card.image==='string'&&card.image.trim()){
+   const path=card.image.trim();$('cardContent').classList.remove('no-image');$('imageArea').hidden=false;
+   if(!validImagePath(path)){$('cardImage').hidden=true;$('imageError').hidden=false;$('imageError').textContent='Invalid image path in card data.';}
+   else{$('cardImage').alt='Image for '+$('title').textContent;$('cardImage').src=path;$('cardImage').onerror=()=>{$('cardImage').hidden=true;$('imageError').hidden=false;$('imageError').textContent='Image could not be loaded. Check the image filename and repository folder.';};}
+ }
+}
+$('speak').addEventListener('click',()=>{if(!('speechSynthesis'in window)){$('status').textContent='Text-to-speech is unavailable in this browser.';return;}speechSynthesis.cancel();speech=new SpeechSynthesisUtterance($('title').textContent+'. '+$('description').textContent);speech.lang=document.documentElement.lang;speech.rate=.95;speech.onstart=()=>{$('status').textContent='Reading aloud…'};speech.onend=()=>{$('status').textContent='Finished.'};speech.onerror=e=>{$('status').textContent=e.error==='canceled'?'Stopped.':'Speech playback failed. Check your device voice settings.'};speechSynthesis.speak(speech);});
+$('stop').addEventListener('click',()=>{if('speechSynthesis'in window)speechSynthesis.cancel();$('status').textContent='Stopped.';});
+window.addEventListener('pagehide',()=>{if('speechSynthesis'in window)speechSynthesis.cancel()});
+$('save').addEventListener('click',()=>{
+ if(loadError){$('result').textContent=loadError+' Fix this before saving.';return;}
+ const id=$('id').value.trim(),title=$('editTitle').value.trim(),text=$('editText').value.trim(),image=$('editImage').value.trim();
+ if(!validId(id)||!title||!text){$('result').textContent='Enter a valid ID, title and description.';return;}
+ if(!validImagePath(image)){$('result').textContent='Use a relative image path such as images/plant.jpg (jpg, png, webp, gif or svg).';return;}
+ cards[id]={title,text,...(image?{image}:{})};
+ const url=new URL(location.href);url.search='?id='+encodeURIComponent(id);
+ $('result').replaceChildren();const p=document.createElement('p');p.textContent='Saved in this editor session. Download cards.json and publish it to activate the change.';
+ const a=document.createElement('a');a.href=url.href;a.textContent=url.href;a.target='_blank';a.rel='noopener';$('result').append(p,a);
+ const qr=document.createElement('img');qr.id='qr';qr.alt='QR code for '+id;qr.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent(url.href);$('result').append(qr);
+});
+$('load').addEventListener('click',()=>{const id=$('id').value.trim();if(!validId(id)){$('result').textContent='Enter a valid card ID.';return;}const card=cards[id];if(!card){$('result').textContent='No card found with that ID.';return;}$('editTitle').value=card.title||'';$('editText').value=card.text||'';$('editImage').value=card.image||'';$('result').textContent='Loaded card '+id+'.';});
+$('download').addEventListener('click',()=>{if(loadError){$('result').textContent=loadError+' Fix this before downloading.';return;}const blob=new Blob([JSON.stringify(cards,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='cards.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000);});
+init();
 </script></body></html>
