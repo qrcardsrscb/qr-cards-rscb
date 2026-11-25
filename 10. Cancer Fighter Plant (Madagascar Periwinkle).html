@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Cancer Fighter Plant · Madagascar Periwinkle</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { background: #0a110e; font-family: system-ui, -apple-system, sans-serif; color: #e3f0e8; line-height: 1.5; height: 100%; overflow: hidden; }
+        
+        .site-header { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; background: linear-gradient(135deg, #0c1a14 0%, #0f231b 100%); border-bottom: 1px solid #1e4a33; box-shadow: 0 4px 18px rgba(0, 20, 10, 0.7); padding: 0.65rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.2rem 1rem; min-height: 76px; backdrop-filter: blur(10px); }
+        .header-left { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.3rem 1.2rem; }
+        .site-header h1 { font-size: clamp(1.1rem, 4vw, 1.5rem); font-weight: 600; color: #b5f0c4; text-shadow: 0 0 18px rgba(60, 200, 120, 0.3); white-space: nowrap; }
+        .site-header .tagline { font-size: clamp(0.7rem, 2.5vw, 0.9rem); color: #82b99b; white-space: nowrap; }
+
+        .scroll-container { position: absolute; top: 76px; bottom: 0; left: 0; width: 100%; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+        @media (max-width: 520px) {
+            .site-header { min-height: 92px; padding: 0.55rem 1rem; flex-direction: column; align-items: flex-start; gap: 0.05rem; }
+            .site-header h1 { font-size: 1.1rem; } .site-header .tagline { font-size: 0.72rem; white-space: normal; }
+            .scroll-container { top: 92px; }
+        }
+
+        .section { scroll-snap-align: start; scroll-snap-stop: always; min-height: 100%; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1.5rem; position: relative; border-bottom: 1px solid #1d3d2b; }
+        #title-section { background: radial-gradient(circle at 20% 30%, #0e1f17 0%, #09140e 100%); padding: 1.5rem 1.5rem 3rem 1.5rem; }
+        #about-section { background: linear-gradient(145deg, #0d1c14 0%, #0a1a10 100%); }
+        #facts-section { background: linear-gradient(135deg, #11271d 0%, #0c1b13 100%); }
+        #why-section { background: radial-gradient(ellipse at 70% 40%, #133021 0%, #0a1811 100%); }
+        .section-content { max-width: 780px; width: 100%; margin: 0 auto; }
+
+        h1 { font-size: clamp(1.6rem, 4.5vw, 2.8rem); line-height: 1.1; margin-bottom: 0.3rem; color: #c8f5d9; text-shadow: 0 0 22px rgba(70, 200, 130, 0.25); font-weight: 600; }
+        h2 { font-size: clamp(1.5rem, 4vw, 2.2rem); margin-bottom: 1.5rem; border-left: 5px solid #3bc99b; padding-left: 1rem; color: #bdf5cf; font-weight: 600; }
+        p { font-size: clamp(0.95rem, 2.5vw, 1.1rem); margin-bottom: 1rem; color: #b9d9c4; line-height: 1.6; }
+        ul { list-style: none; margin-top: 0.5rem; }
+        li { font-size: clamp(0.95rem, 2.5vw, 1.1rem); margin-bottom: 1rem; color: #b9d9c4; padding-left: 1.9rem; position: relative; }
+        li::before { content: "🌿"; position: absolute; left: 0; top: 0; font-size: 1.1rem; filter: drop-shadow(0 0 6px #3bc99b); }
+        .facts-list li::before { content: "✨"; }
+        strong { color: #d5f2e0; font-weight: 600; }
+        .highlight-green { color: #6ee7a3; font-weight: 600; text-shadow: 0 0 10px rgba(70, 230, 130, 0.25); }
+
+        .botanical-detail { background: #10221a; padding: 0.8rem 1.2rem; border-radius: 16px; margin: 1rem 0; border: 1px solid #2a5a3f; box-shadow: inset 0 0 18px rgba(0, 50, 20, 0.6), 0 8px 18px rgba(0, 0, 0, 0.4); display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; justify-content: space-between; }
+        .botanical-detail span { font-size: clamp(0.8rem, 2vw, 0.9rem); color: #9fc9b0; display: flex; align-items: baseline; gap: 0.4rem; }
+        .botanical-detail strong { color: #cdf5dd; min-width: 80px; display: inline-block; }
+
+        .plant-visual { margin: 1rem auto; display: flex; justify-content: center; width: 100%; }
+        .plant-image-container { width: 100%; max-width: 220px; aspect-ratio: 1 / 1; border-radius: 20px; overflow: hidden; border: 2px solid #2f7a52; box-shadow: 0 12px 28px -6px rgba(0, 30, 15, 0.9); background: #0d1f16; }
+        @media (max-height: 800px) { .plant-image-container { max-width: 180px; } }
+        @media (max-height: 650px) { .plant-image-container { max-width: 140px; } }
+        .plant-image-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .plant-image-container svg { width: 100%; height: 100%; display: block; background: #10261c; padding: 0.8rem; }
+
+        .scroll-hint { position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: #5e9b7a; display: flex; flex-direction: column; align-items: center; gap: 4px; pointer-events: none; text-transform: uppercase; letter-spacing: 2px; }
+        .scroll-hint span { font-size: 1.4rem; color: #57b87a; filter: drop-shadow(0 0 6px #2b8a4a); }
+        .section:last-of-type .scroll-hint { display: none; }
+
+        .why-box { margin-top: 1.5rem; padding: 1rem 1.4rem; background: #0e2118; border-radius: 16px; border-left: 5px solid #3bc99b; }
+        .why-box p { margin: 0; font-size: 0.95rem; color: #c3e6d1; }
+        @media (max-width: 600px) { .botanical-detail { flex-direction: column; gap: 0.4rem; } .botanical-detail span { width: 100%; } #title-section { padding: 1.2rem 1rem 3rem 1rem; } }
+        .scroll-container::-webkit-scrollbar { width: 6px; } .scroll-container::-webkit-scrollbar-track { background: #0a110e; } .scroll-container::-webkit-scrollbar-thumb { background: #2a6b45; border-radius: 10px; }
+    
+        /* VAIO wallpaper theme */
+        html, body { background: #565b89; color: #f5f7ff; }
+        .site-header { background: linear-gradient(135deg, #6b719f 0%, #50577f 52%, #444968 100%); border-bottom-color: rgba(207, 216, 255, 0.42); box-shadow: 0 4px 18px rgba(19, 23, 48, 0.38); }
+        .site-header h1, h1, strong { color: #ffffff; }
+        .site-header h1, h1 { text-shadow: 0 2px 10px rgba(14, 20, 48, 0.72); }
+        .site-header .tagline, p, li, .botanical-detail span, .scroll-hint { color: #f0f2ff; }
+        h2 { color: #ffffff; border-left-color: #d4dcff; }
+        .highlight-green { color: #b8ffd0; text-shadow: 0 0 10px rgba(70, 230, 130, 0.35); }
+        p[style*="color"] { color: #f0f2ff !important; }
+        .section { isolation: isolate; overflow: hidden; border-bottom-color: rgba(190, 200, 255, 0.28); }
+        #title-section { background: radial-gradient(ellipse at 8% 72%, rgba(207, 205, 255, 0.22) 0%, transparent 35%), radial-gradient(ellipse at 92% 82%, rgba(76, 255, 118, 0.58) 0%, rgba(81, 208, 115, 0.22) 12%, transparent 31%), linear-gradient(165deg, #777db0 0%, #636992 58%, #505775 100%); }
+        #about-section { background: radial-gradient(ellipse at 86% 80%, rgba(100, 238, 132, 0.34) 0%, transparent 29%), radial-gradient(ellipse at 0% 72%, rgba(205, 207, 255, 0.2) 0%, transparent 38%), linear-gradient(160deg, #7479a9 0%, #5c628a 62%, #505678 100%); }
+        #facts-section { background: radial-gradient(ellipse at 12% 74%, rgba(208, 207, 255, 0.2) 0%, transparent 36%), radial-gradient(ellipse at 94% 84%, rgba(77, 242, 119, 0.4) 0%, transparent 27%), linear-gradient(165deg, #7076a5 0%, #5d638c 58%, #4e5576 100%); }
+        #why-section { background: radial-gradient(ellipse at 4% 74%, rgba(206, 205, 255, 0.24) 0%, transparent 37%), radial-gradient(ellipse at 96% 82%, rgba(76, 255, 118, 0.52) 0%, rgba(81, 208, 115, 0.2) 14%, transparent 31%), linear-gradient(165deg, #777cad 0%, #626890 58%, #505776 100%); }
+        .section::before { content: ""; position: absolute; z-index: 0; inset: 0; pointer-events: none; opacity: 0.78; background-repeat: no-repeat; background-size: 100% 100%; background-image: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 1440 900%27 preserveAspectRatio=%27none%27%3E%3Cdefs%3E%3ClinearGradient id=%27vein%27 x1=%270%27 y1=%270%27 x2=%271%27 y2=%270%27%3E%3Cstop stop-color=%27%23dce7ff%27 stop-opacity=%270%27/%3E%3Cstop offset=%270.38%27 stop-color=%27%23e9edff%27 stop-opacity=%270.62%27/%3E%3Cstop offset=%270.7%27 stop-color=%27%23ffffff%27 stop-opacity=%270.8%27/%3E%3Cstop offset=%271%27 stop-color=%27%23a6ffb9%27 stop-opacity=%270.45%27/%3E%3C/linearGradient%3E%3Cfilter id=%27glow%27 x=%27-20%25%27 y=%27-50%25%27 width=%27140%25%27 height=%27200%25%27%3E%3CfeGaussianBlur stdDeviation=%276%27/%3E%3C/filter%3E%3C/defs%3E%3Cpath d=%27M-40 650 C130 680 160 760 340 748 S560 800 710 810 S940 850 1115 815 S1320 780 1490 840%27 fill=%27none%27 stroke=%27url(%23vein)%27 stroke-width=%2718%27 opacity=%270.45%27 filter=%27url(%23glow)%27/%3E%3Cpath d=%27M-40 650 C130 680 160 760 340 748 S560 800 710 810 S940 850 1115 815 S1320 780 1490 840%27 fill=%27none%27 stroke=%27url(%23vein)%27 stroke-width=%274%27/%3E%3Cpath d=%27M-40 625 C115 650 178 725 346 724 S580 780 720 788 S940 825 1110 790 S1320 755 1490 815%27 fill=%27none%27 stroke=%27%23dce7ff%27 stroke-opacity=%270.34%27 stroke-width=%271%27/%3E%3Cpath d=%27M-40 680 C120 700 175 780 352 770 S570 820 722 830 S947 870 1124 835 S1322 800 1490 860%27 fill=%27none%27 stroke=%27%23c9d6ff%27 stroke-opacity=%270.28%27 stroke-width=%271%27/%3E%3C/svg%3E"); }
+        #title-section::before { opacity: 0.8; }
+        #about-section::before { transform: scaleX(-1); opacity: 0.56; }
+        #facts-section::before { transform: scaleY(-1); opacity: 0.5; }
+        #why-section::before { transform: scale(-1); opacity: 0.7; }
+        .section-content { position: relative; z-index: 1; }
+        .scroll-hint { z-index: 1; }
+        .botanical-detail, .why-box { background: rgba(25, 31, 62, 0.88); border-color: rgba(190, 204, 255, 0.55); box-shadow: 0 8px 18px rgba(19, 23, 48, 0.28); }
+        .botanical-detail strong, .why-box p { color: #ffffff; }
+        .scroll-hint span { color: #e1e8ff; filter: drop-shadow(0 0 6px rgba(185, 204, 255, 0.7)); }
+        .scroll-container::-webkit-scrollbar-track { background: #51577e; }
+        .scroll-container::-webkit-scrollbar-thumb { background: #a8afd5; }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-left">
+            <h1><span class="leaf-emoji">🌿</span> Cancer Fighter Plant</h1>
+            <span class="tagline">Madagascar Periwinkle · Vinca · Cape Periwinkle</span>
+        </div>
+    </header>
+
+    <div class="scroll-container">
+        <section class="section" id="title-section">
+            <div class="section-content" style="text-align: center;">
+                <h1>🌿 Cancer Fighter Plant</h1>
+                <p style="font-size: 1.1rem; color: #a3dbb4; margin-bottom: 0.5rem;">Madagascar Periwinkle · Vinca · Cape Periwinkle</p>
+                <div class="botanical-detail" style="text-align: left;">
+                    <span><strong>Common names</strong> Madagascar Periwinkle, Vinca, Cape Periwinkle</span>
+                    <span><strong>Botanical name</strong> <em>Catharanthus roseus</em></span>
+                    <span><strong>Family</strong> Apocynaceae (Dogbane family)</span>
+                    <span><strong>Native habitat</strong> Madagascar</span>
+                </div>
+                <div class="plant-visual">
+                    <div class="plant-image-container">
+                        <img src="madagascar_periwinkle_010.jpg" alt="Cancer Fighter Plant (Madagascar Periwinkle)">
+                    </div>
+                </div>
+                <p style="color: #7fad92; font-style: italic; margin-top: 0.8rem; font-size: 0.9rem;">Scroll to explore ↓</p>
+            </div>
+            <div class="scroll-hint"><span>▼</span><span>swipe / scroll</span></div>
+        </section>
+
+        <section class="section" id="about-section">
+            <div class="section-content">
+                <h2>About The Plant</h2>
+                <p>Sadabihari is a popular ornamental flowering plant recognised by its attractive five-petalled flowers, which are commonly pink, white or purple, and its glossy, oval-shaped leaves. Although it is widely grown in gardens, the plant has enormous pharmaceutical importance because it produces specialised chemical compounds called <span class="highlight-green">alkaloids</span>.</p>
+                <p style="margin-top: 1rem;">Two of its most important compounds are vincristine and vinblastine, which are used in cancer chemotherapy. These compounds interfere with microtubule formation and prevent cancer cells from completing normal cell division. The plant is therefore an important resource for pharmaceutical research, drug discovery and plant metabolic engineering.</p>
+            </div>
+            <div class="scroll-hint"><span>▼</span><span>scroll</span></div>
+        </section>
+
+        <section class="section" id="facts-section">
+            <div class="section-content">
+                <h2>Interesting facts</h2>
+                <ul class="facts-list">
+                    <li><strong>Anticancer Compounds:</strong> Produces vincristine and vinblastine, two important chemotherapy drugs.</li>
+                    <li><strong>Cell Division:</strong> These compounds interfere with tubulin and disrupt the formation of microtubules required for cell division.</li>
+                    <li><strong>Scientific Importance:</strong> Plant-cell cultures and hairy-root cultures are investigated to understand and improve alkaloid production.</li>
+                    <li><strong>Safety:</strong> The entire plant is toxic if consumed and must never be used as a home remedy.</li>
+                </ul>
+            </div>
+            <div class="scroll-hint"><span>▼</span><span>scroll</span></div>
+        </section>
+
+        <section class="section" id="why-section">
+            <div class="section-content">
+                <h2>Why it is called <br>“The Cancer Fighter Plant”</h2>
+                <p>Sadabihari produces two valuable alkaloids, <span class="highlight-green">vincristine</span> and <span class="highlight-green">vinblastine</span>, which are used in cancer chemotherapy. These compounds bind to tubulin, a protein required for microtubule formation, and interfere with the formation of the mitotic spindle during cell division. Consequently, cancer cells cannot complete normal cell division. This makes Sadabihari a remarkable resource for pharmaceutical research, anticancer drug development and plant biotechnology.</p>
+                <div class="why-box">
+                    <p>🔬 <strong>Did you know?</strong> Vincristine and vinblastine have been instrumental in increasing childhood leukemia survival rates to over 90%.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
+
