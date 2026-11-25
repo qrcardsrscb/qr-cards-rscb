@@ -57,6 +57,7 @@ async function init(){
  const params=new URLSearchParams(location.search);
  if(params.get('editor')==='1'){$('viewer').style.display='none';$('editor').style.display='block';if(loadError)$('result').textContent=loadError+' Do not download a replacement until this is fixed.';return;}
  const id=params.get('id');const card=id&&Object.prototype.hasOwnProperty.call(cards,id)?cards[id]:null;
+ if(card&&typeof card==='object'&&typeof card.page==='string'&&card.page.trim()){location.replace(card.page.trim());return;}
  if(!card||typeof card!=='object'){$('title').textContent=id?'Card not found':'Welcome';$('description').textContent=loadError?loadError:(id?'This QR code does not match a published card.':'Scan a card QR code to view its information.');$('speak').disabled=true;$('stop').disabled=true;return;}
  $('title').textContent=String(card.title||'Untitled');$('description').textContent=String(card.text||'');document.title=String(card.title||'Information Card');if(typeof card.page==='string'&&card.page.trim()){$('fullPage').href=card.page.trim();$('fullPage').hidden=false;}
  if(typeof card.image==='string'&&card.image.trim()){
