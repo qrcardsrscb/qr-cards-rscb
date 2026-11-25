@@ -1,85 +1,23 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Information Cards</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prakriti Mela · Plant Guide</title>
 <style>
-:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#182438;background:#f3f6fb}*{box-sizing:border-box}body{margin:0}main{max-width:980px;margin:35px auto;padding:18px}.panel{background:white;border:1px solid #e1e7f0;border-radius:18px;padding:26px;box-shadow:0 8px 30px #17233a0c}h1{margin:0 0 12px;font-size:1.65rem}p{line-height:1.7;white-space:pre-wrap}button{border:0;border-radius:10px;padding:12px 17px;background:#215cdb;color:white;font-weight:600;cursor:pointer;font-size:1rem}button.secondary{background:#e8eefb;color:#23467f}button:disabled{opacity:.5}input,textarea{width:100%;padding:12px;border:1px solid #c8d3e5;border-radius:9px;font:inherit;margin:6px 0 15px}label{font-weight:600}nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:12px}a{color:#215cdb}small,.muted{color:#64748b}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}#editor{display:none}#qr{display:block;max-width:190px;margin:15px 0}#result{margin-top:18px;overflow-wrap:anywhere}#status{margin-top:12px}.card-content{display:grid;grid-template-columns:minmax(0,1fr) minmax(190px,34%);gap:24px;align-items:start}.card-content.no-image{display:block}.card-photo{display:block;width:100%;height:auto;max-height:440px;object-fit:contain;border-radius:12px;background:#f3f6fb;border:1px solid #e1e7f0}.card-photo[hidden]{display:none}.card-text{margin:0;overflow-wrap:anywhere}#imageError{color:#a13232;font-size:.9rem;white-space:normal} @media(max-width:620px){main{margin:12px auto}.panel{padding:20px}.card-content{display:flex;flex-direction:column-reverse;gap:15px}.card-photo{max-height:300px}}
-
-/* VAIO wallpaper theme */
-:root { color: #f5f7ff; background: #565b89; }
-body { color: #f5f7ff; background-color: #565b89; background-image: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 1440 440%27 preserveAspectRatio=%27none%27%3E%3Cdefs%3E%3ClinearGradient id=%27v%27 x1=%270%27 y1=%270%27 x2=%271%27 y2=%270%27%3E%3Cstop stop-color=%27%23dce7ff%27 stop-opacity=%270%27/%3E%3Cstop offset=%270.4%27 stop-color=%27%23e9edff%27 stop-opacity=%270.65%27/%3E%3Cstop offset=%270.72%27 stop-color=%27%23ffffff%27 stop-opacity=%270.8%27/%3E%3Cstop offset=%271%27 stop-color=%27%23a6ffb9%27 stop-opacity=%270.5%27/%3E%3C/linearGradient%3E%3Cfilter id=%27g%27 x=%27-20%25%27 y=%27-50%25%27 width=%27140%25%27 height=%27200%25%27%3E%3CfeGaussianBlur stdDeviation=%277%27/%3E%3C/filter%3E%3C/defs%3E%3Cpath d=%27M-20 160 C150 175 210 280 390 265 S620 330 770 340 S1020 390 1190 345 S1370 300 1460 365%27 fill=%27none%27 stroke=%27url(%23v)%27 stroke-width=%2720%27 opacity=%270.5%27 filter=%27url(%23g)%27/%3E%3Cpath d=%27M-20 160 C150 175 210 280 390 265 S620 330 770 340 S1020 390 1190 345 S1370 300 1460 365%27 fill=%27none%27 stroke=%27url(%23v)%27 stroke-width=%274%27/%3E%3Cpath d=%27M-20 140 C150 150 210 255 390 245 S620 310 770 320 S1020 370 1190 325 S1370 280 1460 345%27 fill=%27none%27 stroke=%27%23e8edff%27 stroke-opacity=%270.4%27 stroke-width=%271%27/%3E%3C/svg%3E"), radial-gradient(ellipse at 90% 95%, rgba(75, 242, 119, .28), transparent 32%), linear-gradient(155deg, #777db0 0%, #636992 58%, #505775 100%); background-repeat: no-repeat; background-size: 100% 42vh, cover, cover; background-position: bottom center, center, center; background-attachment: fixed; }
-main { position: relative; z-index: 1; }
-nav strong, h1, label { color: #fff; }
-a { color: #dce5ff; }
-small, .muted { color: #e1e6fb; }
-.panel { color: #f5f7ff; background: rgba(25, 31, 62, .9); border-color: rgba(207, 216, 255, .45); box-shadow: 0 12px 36px rgba(19, 23, 48, .35); backdrop-filter: blur(12px); }
-p { color: #f0f2ff; }
-button { background: linear-gradient(135deg, #7c8ee8, #596dcc); color: #fff; box-shadow: 0 4px 12px rgba(10, 15, 45, .25); }
-button.secondary { background: rgba(219, 226, 255, .18); color: #f5f7ff; border: 1px solid rgba(219, 226, 255, .38); }
-button:hover:not(:disabled) { filter: brightness(1.12); }
-input, textarea { color: #fff; background: rgba(12, 18, 43, .72); border-color: rgba(195, 207, 255, .48); }
-input::placeholder, textarea::placeholder { color: #bfc9ed; }
-input:focus, textarea:focus { outline: 2px solid #c2ceff; outline-offset: 1px; }
-.card-photo { background: rgba(12, 18, 43, .45); border-color: rgba(207, 216, 255, .38); }
-#imageError { color: #ffd4dd; }
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#f5f7ff;background:#565b89}body{min-height:100vh;background-image:radial-gradient(ellipse at 90% 90%,rgba(76,255,118,.32),transparent 28%),linear-gradient(165deg,#777db0 0%,#636992 58%,#505775 100%);background-attachment:fixed}main{max-width:900px;margin:0 auto;padding:56px 24px 84px}.panel{position:relative;overflow:hidden;padding:clamp(24px,5vw,48px);border:1px solid rgba(207,216,255,.4);border-radius:24px;background:rgba(25,31,62,.88);box-shadow:0 18px 55px rgba(19,23,48,.35);backdrop-filter:blur(12px)}h1{margin:0 0 10px;font-size:clamp(2rem,5vw,3rem);color:#fff;text-shadow:0 2px 10px rgba(14,20,48,.65)}.intro{margin:0 0 28px;color:#e1e6fb;line-height:1.65}.plant-list{display:grid;gap:10px}.plant-card{display:grid;grid-template-columns:42px 1fr 24px;align-items:center;gap:12px;padding:14px 16px;border:1px solid rgba(207,216,255,.22);border-radius:14px;background:rgba(255,255,255,.055);color:#fff;text-decoration:none;transition:background .18s ease,transform .18s ease}.plant-card:hover{background:rgba(194,207,255,.16);transform:translateY(-1px)}.number{color:#d5dbff;font-weight:700;font-variant-numeric:tabular-nums}.arrow{color:#c7d2ff;font-size:1.25rem;text-align:right}.footer{margin-top:22px;color:#d7dcf4;font-size:.9rem}@media(max-width:540px){main{padding:20px 14px 40px}.panel{padding:22px 16px}.plant-card{grid-template-columns:34px 1fr 20px;padding:13px 12px;gap:9px}}
 </style>
 </head>
-<body><main>
-<nav><strong>Information Cards</strong><a id="editorLink" href="?editor=1" style="display:none">Card editor</a></nav>
-<section id="viewer" class="panel">
-<h1 id="title">Loading…</h1>
-<div id="cardContent" class="card-content no-image"><p id="description" class="card-text"></p><div id="imageArea" hidden><img id="cardImage" class="card-photo" alt=""><p id="imageError" hidden></p></div></div>
-<div class="actions"><button id="speak">▶ Dictate</button><button id="stop" class="secondary">■ Stop</button></div>
-<p id="status" class="muted" role="status"></p>
-</section>
-<section id="editor" class="panel">
-<h1>Create or edit a card</h1>
-<p class="muted">Edit cards here, download cards.json, then upload it to your GitHub repository to publish changes. Pictures must also be uploaded to the repository.</p>
-<label for="id">Card ID (letters, numbers, - or _)</label><input id="id" placeholder="001" maxlength="60">
-<label for="editTitle">Card title</label><input id="editTitle" placeholder="The Water Saver Plant">
-<label for="editText">Card description</label><textarea id="editText" rows="10" placeholder="Enter the text to be read aloud..."></textarea>
-<label for="editImage">Image path (optional)</label><input id="editImage" placeholder="images/water_saver_plant_001.jpg">
-<p class="muted"><small>Upload the image to your repository's images folder. Enter the exact relative path, including filename and extension.</small></p>
-<div class="actions"><button id="save">Save card locally</button><button id="download" class="secondary">Download cards.json</button><button id="load" class="secondary">Load card by ID</button></div>
-<div id="result" aria-live="polite"></div>
-</section>
-</main>
-<script>
-'use strict';
-const $=id=>document.getElementById(id);
-let cards={},speech=null,loadError='';
-function validId(id){return /^[a-zA-Z0-9_-]{1,60}$/.test(id)}
-function validImagePath(path){if(!path)return true; if(path.startsWith('/')||path.startsWith('\\')||path.includes('\\')||path.includes('?')||path.includes('#'))return false;const segments=path.split('/');return segments.every(s=>s&&s!=='.'&&s!=='..')&&/\.(png|jpe?g|webp|gif|svg)$/i.test(path)}
-async function init(){
- try{const r=await fetch('cards.json',{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const data=await r.json();if(!data||typeof data!=='object'||Array.isArray(data))throw Error('cards.json must contain an object');cards=data;}
- catch(e){loadError='Could not load cards.json: '+e.message;}
- const params=new URLSearchParams(location.search);
- if(params.get('editor')==='1'){$('viewer').style.display='none';$('editor').style.display='block';if(loadError)$('result').textContent=loadError+' Do not download a replacement until this is fixed.';return;}
- const id=params.get('id');const card=id&&Object.prototype.hasOwnProperty.call(cards,id)?cards[id]:null;
- if(!card||typeof card!=='object'){$('title').textContent=id?'Card not found':'Welcome';$('description').textContent=loadError?loadError:(id?'This QR code does not match a published card.':'Scan a card QR code to view its information.');$('speak').disabled=true;$('stop').disabled=true;return;}
- $('title').textContent=String(card.title||'Untitled');$('description').textContent=String(card.text||'');document.title=String(card.title||'Information Card');
- if(typeof card.image==='string'&&card.image.trim()){
-   const path=card.image.trim();$('cardContent').classList.remove('no-image');$('imageArea').hidden=false;
-   if(!validImagePath(path)){$('cardImage').hidden=true;$('imageError').hidden=false;$('imageError').textContent='Invalid image path in card data.';}
-   else{$('cardImage').alt='Image for '+$('title').textContent;$('cardImage').src=path;$('cardImage').onerror=()=>{$('cardImage').hidden=true;$('imageError').hidden=false;$('imageError').textContent='Image could not be loaded. Check the image filename and repository folder.';};}
- }
-}
-$('speak').addEventListener('click',()=>{if(!('speechSynthesis'in window)){$('status').textContent='Text-to-speech is unavailable in this browser.';return;}speechSynthesis.cancel();speech=new SpeechSynthesisUtterance($('title').textContent+'. '+$('description').textContent);speech.lang=document.documentElement.lang;speech.rate=.95;speech.onstart=()=>{$('status').textContent='Reading aloud…'};speech.onend=()=>{$('status').textContent='Finished.'};speech.onerror=e=>{$('status').textContent=e.error==='canceled'?'Stopped.':'Speech playback failed. Check your device voice settings.'};speechSynthesis.speak(speech);});
-$('stop').addEventListener('click',()=>{if('speechSynthesis'in window)speechSynthesis.cancel();$('status').textContent='Stopped.';});
-window.addEventListener('pagehide',()=>{if('speechSynthesis'in window)speechSynthesis.cancel()});
-$('save').addEventListener('click',()=>{
- if(loadError){$('result').textContent=loadError+' Fix this before saving.';return;}
- const id=$('id').value.trim(),title=$('editTitle').value.trim(),text=$('editText').value.trim(),image=$('editImage').value.trim();
- if(!validId(id)||!title||!text){$('result').textContent='Enter a valid ID, title and description.';return;}
- if(!validImagePath(image)){$('result').textContent='Use a relative image path such as images/plant.jpg (jpg, png, webp, gif or svg).';return;}
- cards[id]={title,text,...(image?{image}:{})};
- const url=new URL(location.href);url.search='?id='+encodeURIComponent(id);
- $('result').replaceChildren();const p=document.createElement('p');p.textContent='Saved in this editor session. Download cards.json and publish it to activate the change.';
- const a=document.createElement('a');a.href=url.href;a.textContent=url.href;a.target='_blank';a.rel='noopener';$('result').append(p,a);
- const qr=document.createElement('img');qr.id='qr';qr.alt='QR code for '+id;qr.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent(url.href);$('result').append(qr);
-});
-$('load').addEventListener('click',()=>{const id=$('id').value.trim();if(!validId(id)){$('result').textContent='Enter a valid card ID.';return;}const card=cards[id];if(!card){$('result').textContent='No card found with that ID.';return;}$('editTitle').value=card.title||'';$('editText').value=card.text||'';$('editImage').value=card.image||'';$('result').textContent='Loaded card '+id+'.';});
-$('download').addEventListener('click',()=>{if(loadError){$('result').textContent=loadError+' Fix this before downloading.';return;}const blob=new Blob([JSON.stringify(cards,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='cards.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000);});
-init();
-</script></body></html>
+<body><main><section class="panel"><h1>Prakriti Mela Plant Guide</h1><p class="intro">Choose a plant to explore its story, facts, and benefits.</p><nav class="plant-list">
+<a class="plant-card" href="1.%20Water%20Saver%20Plant%20%28Jade%20Plant%29.html"><span class="number">01</span><span>Water Saver Plant (Jade Plant)</span><span class="arrow">→</span></a>
+<a class="plant-card" href="2.%20Pollution%20Manager%20Plant%20%28Peace%20Lily%29.html"><span class="number">02</span><span>Pollution Manager Plant (Peace Lily)</span><span class="arrow">→</span></a>
+<a class="plant-card" href="3.%20Natural%20Healing%20Plant%20%28Aloe%20Vera%29.html"><span class="number">03</span><span>Natural Healing Plant (Aloe Vera)</span><span class="arrow">→</span></a>
+<a class="plant-card" href="4.%20Natural%20Chemical%20Factory%20%28Holy%20Basil%20%20Tulsi%29.html"><span class="number">04</span><span>Natural Chemical Factory (Holy Basil Tulsi)</span><span class="arrow">→</span></a>
+<a class="plant-card" href="5.%20Natural%20Insect%20Controller%20%28Neem%29.html"><span class="number">05</span><span>Natural Insect Controller (Neem)</span><span class="arrow">→</span></a>
+<a class="plant-card" href="6%20Nature%27s%20Cloning%20Expert.html"><span class="number">06</span><span>Nature&#39;s Cloning Expert (Spider Plant)</span><span class="arrow">→</span></a>
+<a class="plant-card" href="7.%20The%20Desert%20Survivor%20%28Snake%20Plant%29.html"><span class="number">07</span><span>The Desert Survivor (Snake Plant)</span><span class="arrow">→</span></a>
+<a class="plant-card" href="8.%20Green%20Water%20Cleaner%20Plant%20%28Money%20Plant%29.html"><span class="number">08</span><span>Green Water Cleaner Plant (Money Plant)</span><span class="arrow">→</span></a>
+<a class="plant-card" href="9.%20Natural%20pH%20Indicator%20%28Hibiscus%29.html"><span class="number">09</span><span>Natural pH Indicator (Hibiscus)</span><span class="arrow">→</span></a>
+<a class="plant-card" href="10.%20Cancer%20Fighter%20Plant%20%28Madagascar%20Periwinkle%29.html"><span class="number">10</span><span>Cancer Fighter Plant (Madagascar Periwinkle)</span><span class="arrow">→</span></a>
+</nav><p class="footer">Ten plant guides · VAIO inspired edition</p></section></main></body>
+</html>
